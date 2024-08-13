@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { Observable } from 'rxjs-compat';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -29,12 +29,12 @@ export class HomeComponent implements OnInit {
     })
 
     const subscr = customObservable.pipe(
+      filter((data:number) => data % 2 == 0),
       map((data:number)=> 'Round ' + (data + 1))
     ).subscribe(data=>{
       console.log(data)
     }, error => {console.log(error); alert(error.message)},
-      complete => console.log('Completed')
-      
+      complete => console.log('Completed')      
     )
 
     this.dest.onDestroy(()=>subscr.unsubscribe())
