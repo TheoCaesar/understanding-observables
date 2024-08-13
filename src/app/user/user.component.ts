@@ -23,6 +23,8 @@ export class UserComponent implements OnInit {
   onActivate(){
     console.log('click');
     
-    this.userService.activatedEmitter.emit(true);
+    // this.userService.activatedEmitter.emit(true);
+    this.userService.activatedEmitter.next(true);
+
   }
 }
