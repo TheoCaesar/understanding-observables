@@ -21,13 +21,16 @@ export class HomeComponent implements OnInit {
       let count = 0;
       setInterval(()=>{
         observer.next(count);
+        if (count == 3) observer.complete(); //end at 3
         if (count > 4) observer.error(new Error("Cant go beyond 4"))
         count++;
       }, 1000)
     })
     const subscr = customObservable.subscribe(data=>{
       console.log(data)
-    }, error => {console.log(error); alert(error.message)}
+    }, error => {console.log(error); alert(error.message)},
+      complete => console.log('Completed')
+      
     )
 
     this.dest.onDestroy(()=>subscr.unsubscribe())
